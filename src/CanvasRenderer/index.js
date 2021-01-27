@@ -30,6 +30,9 @@ const HostConfig = {
   appendChildToContainer(parent, child) {
     parent.appendChild(child)
   },
+  appendChild: function (parent, child) {
+    parent.appendChild(child)
+  },
   prepareUpdate(
     instance,
     type,
@@ -38,7 +41,13 @@ const HostConfig = {
     rootContainerInstance,
     currentHostContext
   ) {
-    return newProps
+    const changedProps = {}
+    Object.keys(newProps).forEach((k) => {
+      if (newProps[k] !== oldProps[k]) {
+        changedProps[k] = newProps[k]
+      }
+    })
+    return changedProps
   },
   commitUpdate: function (
     instance,
@@ -49,9 +58,6 @@ const HostConfig = {
     finishedWork
   ) {
     instance.update(newProps)
-  },
-  appendChild: function (parentInstance, child) {
-    parentInstance.appendChild(child)
   },
   supportsMutation: true,
   getRootHostContext(nextRootInstance) {
