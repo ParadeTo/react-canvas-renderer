@@ -45,13 +45,13 @@ const HostConfig = {
     rootContainerInstance,
     currentHostContext
   ) {
-    const changedProps = {}
-    Object.keys(newProps).forEach((k) => {
-      if (newProps[k] !== oldProps[k]) {
-        changedProps[k] = newProps[k]
-      }
-    })
-    return changedProps
+    // const changedProps = {}
+    // Object.keys(newProps).forEach((k) => {
+    //   if (newProps[k] !== oldProps[k]) {
+    //     changedProps[k] = newProps[k]
+    //   }
+    // })
+    return newProps
   },
   commitUpdate: function (
     instance,
@@ -63,15 +63,6 @@ const HostConfig = {
   ) {
     instance.update(newProps)
   },
-  supportsMutation: true,
-  getRootHostContext(nextRootInstance) {
-    const rootContext = {}
-    return rootContext
-  },
-  getChildHostContext: function (parentContext, fiberType, rootInstance) {
-    const context = {}
-    return context
-  },
   removeChild(parent, child) {
     parent.removeChild(child)
   },
@@ -81,11 +72,23 @@ const HostConfig = {
   prepareForCommit: function (rootContainerInstance) {
     return null
   },
+  insertBefore(parent, child, beforeChild) {
+    parent.insertBefore(child, beforeChild)
+  },
+  getRootHostContext(nextRootInstance) {
+    const rootContext = {}
+    return rootContext
+  },
+  getChildHostContext: function (parentContext, fiberType, rootInstance) {
+    const context = {}
+    return context
+  },
+  supportsMutation: true,
   // 暂时不需要的接口
   finalizeInitialChildren: function () {},
   appendAllChildren(...args) {},
   commitTextUpdate: function (textInstance, oldText, newText) {},
-  insertBefore: (parentInstance, child, beforeChild) => {},
+
   removeChildFromContainer(container, child) {},
   commitMount: (domElement, type, newProps, fiberNode) => {},
   clearContainer(...args) {},
@@ -105,7 +108,7 @@ const CanvasRenderer = {
     const isAsync = false // Disables async rendering
     const container = reconcilerInstance.createContainer(stage, isAsync) // Creates root fiber node.
     const parentComponent = null // Since there is no parent (since this is the root fiber). We set parentComponent to null.
-    debugger
+
     reconcilerInstance.updateContainer(
       element,
       container,

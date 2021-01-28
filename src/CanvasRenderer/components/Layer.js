@@ -34,6 +34,16 @@ export default class Layer {
     }
   }
 
+  insertBefore(child, beforeChild) {
+    for (let i = 0; i < this.__children.length; i++) {
+      if (this.__children[i] === beforeChild) {
+        this.__children.splice(i, 0, child)
+        child.parent = this
+        break
+      }
+    }
+  }
+
   renderChildren() {
     for (let child of this.__children) {
       child.render()

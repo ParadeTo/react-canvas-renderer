@@ -158,7 +158,7 @@ function Char({map, x, y, color}) {
       if (map[i][j] === 1) {
         circles.push(
           <circle
-            key={Math.random().toString()}
+            key={`${i}-${j}`}
             x={(2 * j + 1) * R}
             y={(2 * i + 1) * R}
             radius={R}
