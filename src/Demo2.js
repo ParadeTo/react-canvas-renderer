@@ -205,7 +205,7 @@ function CountDown({x, y, remainingTime}) {
           x={index * 14 * R}
           y={0}
           map={charMap.digitals[digital]}
-          color='purple'
+          color='blue'
         />
       ))}
       <Char key='day' x={30 * R} y={0} map={charMap.day} color='blue' />
@@ -218,7 +218,7 @@ function CountDown({x, y, remainingTime}) {
           color='green'
         />
       ))}
-      <Char key='colon1' x={73 * R} y={0} map={charMap.colon} color='yellow' />
+      <Char key='colon1' x={73 * R} y={0} map={charMap.colon} color='red' />
       {numberToArray(minutes).map((digital, index) => (
         <Char
           key={`m${index}`}
@@ -228,7 +228,7 @@ function CountDown({x, y, remainingTime}) {
           color='green'
         />
       ))}
-      <Char key='colon2' x={109 * R} y={0} map={charMap.colon} color='yellow' />
+      <Char key='colon2' x={109 * R} y={0} map={charMap.colon} color='red' />
       {numberToArray(seconds).map((digital, index) => (
         <Char
           key={`s${index}`}
@@ -257,7 +257,7 @@ function App({deadline}) {
       <text
         x={10}
         y={30}
-        content='距离过年还有：'
+        content='距离春节还有：'
         font='30px serif'
         fillStyle='orange'
       />

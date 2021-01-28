@@ -5,6 +5,8 @@ import Text from './components/Text'
 import Stage from './components/Stage'
 
 const HostConfig = {
+  // 通过 FiberNode 创建 instance，会保存在 FiberNode 的 stateNode 属性上
+  // 参考 http://www.paradeto.com/react-render/
   createInstance: function (
     type,
     newProps,
@@ -28,6 +30,7 @@ const HostConfig = {
     }
     return element
   },
+  /* 操作子组件 */
   appendInitialChild(parent, child) {
     parent.appendChild(child)
   },
@@ -37,22 +40,11 @@ const HostConfig = {
   appendChild: function (parent, child) {
     parent.appendChild(child)
   },
-  prepareUpdate(
-    instance,
-    type,
-    oldProps,
-    newProps,
-    rootContainerInstance,
-    currentHostContext
-  ) {
-    // const changedProps = {}
-    // Object.keys(newProps).forEach((k) => {
-    //   if (newProps[k] !== oldProps[k]) {
-    //     changedProps[k] = newProps[k]
-    //   }
-    // })
-    return newProps
+  insertBefore(parent, child, beforeChild) {
+    parent.insertBefore(child, beforeChild)
   },
+
+  /* FiberNode 的属性发生变化时会调用该方法 */
   commitUpdate: function (
     instance,
     updatePayload,
@@ -66,15 +58,12 @@ const HostConfig = {
   removeChild(parent, child) {
     parent.removeChild(child)
   },
+  // react 流程结束后，调用此方法，我们可以在这里触发我们的渲染器重新渲染
+  // 此处参考 remax：https://github.com/remaxjs/remax/blob/80606f640b08c79b9fc61d52a03355f0282c5e14/packages/remax-runtime/src/hostConfig/index.ts#L63
   resetAfterCommit: function (rootContainerInstance) {
     rootContainerInstance.render()
   },
-  prepareForCommit: function (rootContainerInstance) {
-    return null
-  },
-  insertBefore(parent, child, beforeChild) {
-    parent.insertBefore(child, beforeChild)
-  },
+
   getRootHostContext(nextRootInstance) {
     const rootContext = {}
     return rootContext
@@ -82,6 +71,19 @@ const HostConfig = {
   getChildHostContext: function (parentContext, fiberType, rootInstance) {
     const context = {}
     return context
+  },
+  prepareForCommit: function (rootContainerInstance) {
+    return null
+  },
+  prepareUpdate(
+    instance,
+    type,
+    oldProps,
+    newProps,
+    rootContainerInstance,
+    currentHostContext
+  ) {
+    return {}
   },
   supportsMutation: true,
   // 暂时不需要的接口
