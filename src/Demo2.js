@@ -151,7 +151,7 @@ const charMap = {
 
 const R = 5
 
-function Char({map, x, y}) {
+function Char({map, x, y, color}) {
   const circles = []
   for (let i = 0; i < map.length; i++) {
     for (let j = 0; j < map[i].length; j++) {
@@ -163,15 +163,14 @@ function Char({map, x, y}) {
             y={(2 * i + 1) * R}
             radius={R}
             fill
-            color='blue'
+            color={color}
           />
         )
       }
     }
   }
-  debugger
   return (
-    <rect x={x} y={y} color='red'>
+    <rect x={x} y={y}>
       {circles}
     </rect>
   )
@@ -197,7 +196,6 @@ function parse(remainingTime) {
 }
 
 function CountDown({x, y, remainingTime}) {
-  debugger
   const {days, hours, minutes, seconds} = parse(remainingTime)
   return (
     <rect x={x} y={y}>
@@ -207,33 +205,37 @@ function CountDown({x, y, remainingTime}) {
           x={index * 14 * R}
           y={0}
           map={charMap.digitals[digital]}
+          color='purple'
         />
       ))}
-      <Char key='day' x={30 * R} y={0} map={charMap.day} />
+      <Char key='day' x={30 * R} y={0} map={charMap.day} color='blue' />
       {numberToArray(hours).map((digital, index) => (
         <Char
           key={`h${index}`}
           x={index * 14 * R + 45 * R}
           y={0}
           map={charMap.digitals[digital]}
+          color='green'
         />
       ))}
-      <Char key='colon1' x={73 * R} y={0} map={charMap.colon} />
+      <Char key='colon1' x={73 * R} y={0} map={charMap.colon} color='yellow' />
       {numberToArray(minutes).map((digital, index) => (
         <Char
           key={`m${index}`}
           x={index * 14 * R + 81 * R}
           y={0}
           map={charMap.digitals[digital]}
+          color='green'
         />
       ))}
-      <Char key='colon2' x={109 * R} y={0} map={charMap.colon} />
+      <Char key='colon2' x={109 * R} y={0} map={charMap.colon} color='yellow' />
       {numberToArray(seconds).map((digital, index) => (
         <Char
           key={`s${index}`}
           x={index * 14 * R + 117 * R}
           y={0}
           map={charMap.digitals[digital]}
+          color='green'
         />
       ))}
     </rect>
@@ -244,24 +246,21 @@ function CountDown({x, y, remainingTime}) {
  * deadline 截止时间，ms
  */
 function App({deadline}) {
-  debugger
   const [remainingTime, setRemainingTime] = useState(deadline - Date.now())
   useEffect(() => {
     setInterval(() => {
       setRemainingTime((remainingTime) => remainingTime - 1000)
     }, 1000)
   }, [])
-  debugger
   return (
     <>
       <text
         x={10}
-        y={20}
+        y={30}
         content='距离过年还有：'
-        font='18px serif'
+        font='30px serif'
         fillStyle='orange'
       />
-      {/* <Char x={14 * R + 117 * R} y={0} map={charMap.digitals[remainingTime]} /> */}
       <CountDown x={20} y={80} remainingTime={remainingTime} />
     </>
   )
