@@ -21,11 +21,20 @@ function App() {
     }, 10)
   }, [x, y])
   return (
-    <juxing x={50} y={50} width={W} height={H} color='blue'>
-      <yuan x={x} y={y} radius={R} color='red'>
-        <juxing x={-10} y={-10} width={20} height={20} color='green' />
-      </yuan>
-    </juxing>
+    <>
+      <text
+        x={10}
+        y={20}
+        content='DEMO1'
+        font='18px serif'
+        fillStyle='orange'
+      />
+      <rect x={50} y={50} width={W} height={H} color='blue'>
+        <circle x={x} y={y} radius={R} color='red'>
+          <rect x={-10} y={-10} width={20} height={20} color='green' />
+        </circle>
+      </rect>
+    </>
   )
 }
 

@@ -1,6 +1,7 @@
 import Reconciler from 'react-reconciler'
 import Circle from './components/Circle'
 import Rect from './components/Rect'
+import Text from './components/Text'
 import Stage from './components/Stage'
 
 const HostConfig = {
@@ -13,11 +14,14 @@ const HostConfig = {
   ) {
     let element
     switch (type) {
-      case 'juxing':
+      case 'rect':
         element = new Rect(newProps)
         break
-      case 'yuan':
+      case 'circle':
         element = new Circle(newProps)
+        break
+      case 'text':
+        element = new Text(newProps)
         break
       default:
         break
@@ -68,10 +72,17 @@ const HostConfig = {
     const context = {}
     return context
   },
+  removeChild(parent, child) {
+    parent.removeChild(child)
+  },
+  resetAfterCommit: function (rootContainerInstance) {
+    rootContainerInstance.render()
+  },
+  prepareForCommit: function (rootContainerInstance) {
+    return null
+  },
   // 暂时不需要的接口
   finalizeInitialChildren: function () {},
-  prepareForCommit: function (rootContainerInstance) {},
-  resetAfterCommit: function (rootContainerInstance) {},
   appendAllChildren(...args) {},
   commitTextUpdate: function (textInstance, oldText, newText) {},
   insertBefore: (parentInstance, child, beforeChild) => {},
@@ -89,11 +100,12 @@ const HostConfig = {
 const reconcilerInstance = Reconciler(HostConfig)
 
 const CanvasRenderer = {
-  render(element, renderDom, callback) {
-    const stage = new Stage(renderDom, 500, 500)
+  render(element, renderDom, width, height, callback) {
+    const stage = new Stage(renderDom, width, height)
     const isAsync = false // Disables async rendering
     const container = reconcilerInstance.createContainer(stage, isAsync) // Creates root fiber node.
     const parentComponent = null // Since there is no parent (since this is the root fiber). We set parentComponent to null.
+    debugger
     reconcilerInstance.updateContainer(
       element,
       container,

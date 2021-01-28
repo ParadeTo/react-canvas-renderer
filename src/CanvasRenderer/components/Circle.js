@@ -1,9 +1,10 @@
 import Layer from './Layer'
 
 export default class Circle extends Layer {
-  constructor({x, y, radius, color}) {
+  constructor({x, y, radius, color, fill}) {
     super(x, y, color)
     this.radius = radius
+    this.fill = fill
   }
 
   render() {
@@ -11,8 +12,13 @@ export default class Circle extends Layer {
     if (!stage) return
     stage.context.beginPath()
     stage.context.arc(x, y, this.radius, 0, 2 * Math.PI, true)
-    stage.context.strokeStyle = this.color
-    stage.context.stroke()
+    if (this.fill) {
+      stage.context.fillStyle = this.color
+      stage.context.fill()
+    } else {
+      stage.context.strokeStyle = this.color
+      stage.context.stroke()
+    }
     this.renderChildren()
   }
 }

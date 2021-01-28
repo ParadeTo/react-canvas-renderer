@@ -5,8 +5,8 @@ export default class Stage extends Layer {
     this.width = width
     this.height = height
     var canvas = document.createElement('canvas')
-    canvas.height = width
-    canvas.width = height
+    canvas.height = height
+    canvas.width = width
     canvas.style.border = '1px solid black'
     this.context = canvas.getContext('2d')
     renderDom.appendChild(canvas)
