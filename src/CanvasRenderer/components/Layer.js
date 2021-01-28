@@ -23,7 +23,15 @@ export default class Layer {
   appendChild(child) {
     this.__children.push(child)
     child.parent = this
-    this.render()
+  }
+
+  removeChild(child) {
+    for (let i = 0; i < this.__children.length; i++) {
+      if (this.__children[i] === child) {
+        this.__children.splice(i, 1)
+        break
+      }
+    }
   }
 
   renderChildren() {
@@ -36,7 +44,5 @@ export default class Layer {
     Object.keys(props).forEach((k) => {
       this[k] = props[k]
     })
-    const {stage} = this.resolvePosAndStage()
-    if (stage) stage.render()
   }
 }
