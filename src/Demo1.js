@@ -4,7 +4,7 @@ const R = 20
 const W = 100
 const H = 100
 
-function App() {
+function Demo1() {
   const [x, setX] = useState(R)
   const [y, setY] = useState(R)
   useEffect(() => {
@@ -22,13 +22,7 @@ function App() {
   }, [x, y])
   return (
     <>
-      <text
-        x={10}
-        y={20}
-        content='DEMO1'
-        font='18px serif'
-        fillStyle='orange'
-      />
+      <text x={10} y={20} content='DEMO1' font='18px serif' fillStyle='black' />
       <rect x={50} y={50} width={W} height={H} color='blue'>
         <circle x={x} y={y} radius={R} color='red'>
           <rect x={-10} y={-10} width={20} height={20} color='green' />
@@ -38,4 +32,4 @@ function App() {
   )
 }
 
-export default App
+export default Demo1

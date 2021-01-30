@@ -1,13 +1,17 @@
 import Layer from './Layer'
 export default class Stage extends Layer {
-  constructor(renderDom, width, height) {
+  constructor({renderDom, width, height, style}) {
     super(0, 0, '')
     this.width = width
     this.height = height
     var canvas = document.createElement('canvas')
     canvas.height = height
     canvas.width = width
-    canvas.style.border = '1px solid black'
+
+    Object.keys(style).forEach((prop) => {
+      canvas.style[prop] = style[prop]
+    })
+
     this.context = canvas.getContext('2d')
     renderDom.appendChild(canvas)
   }

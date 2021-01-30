@@ -4,6 +4,8 @@ import Rect from './components/Rect'
 import Text from './components/Text'
 import Stage from './components/Stage'
 
+export {Stage, Circle, Rect, Text}
+
 const HostConfig = {
   // 通过 FiberNode 创建 instance，会保存在 FiberNode 的 stateNode 属性上
   // 参考 http://www.paradeto.com/react-render/
@@ -33,6 +35,7 @@ const HostConfig = {
   /* 操作子组件 */
   appendInitialChild(parent, child) {
     parent.appendChild(child)
+    debugger
   },
   appendChildToContainer(parent, child) {
     parent.appendChild(child)
@@ -42,6 +45,9 @@ const HostConfig = {
   },
   insertBefore(parent, child, beforeChild) {
     parent.insertBefore(child, beforeChild)
+  },
+  removeChild(parent, child) {
+    parent.removeChild(child)
   },
 
   /* FiberNode 的属性发生变化时会调用该方法 */
@@ -55,9 +61,7 @@ const HostConfig = {
   ) {
     instance.update(newProps)
   },
-  removeChild(parent, child) {
-    parent.removeChild(child)
-  },
+
   // react 流程结束后，调用此方法，我们可以在这里触发我们的渲染器重新渲染
   // 此处参考 remax：https://github.com/remaxjs/remax/blob/80606f640b08c79b9fc61d52a03355f0282c5e14/packages/remax-runtime/src/hostConfig/index.ts#L63
   resetAfterCommit: function (rootContainerInstance) {
@@ -86,6 +90,7 @@ const HostConfig = {
     return {}
   },
   supportsMutation: true,
+
   // 暂时不需要的接口
   finalizeInitialChildren: function () {},
   appendAllChildren(...args) {},
@@ -105,8 +110,8 @@ const HostConfig = {
 const reconcilerInstance = Reconciler(HostConfig)
 
 const CanvasRenderer = {
-  render(element, renderDom, width, height, callback) {
-    const stage = new Stage(renderDom, width, height)
+  render(element, renderDom, {width, height, style}, callback) {
+    const stage = new Stage({renderDom, width, height, style})
     const isAsync = false // Disables async rendering
     const container = reconcilerInstance.createContainer(stage, isAsync) // Creates root fiber node.
     const parentComponent = null // Since there is no parent (since this is the root fiber). We set parentComponent to null.

@@ -205,42 +205,43 @@ function CountDown({x, y, remainingTime}) {
           x={index * 14 * R}
           y={0}
           map={charMap.digitals[digital]}
-          color='blue'
+          color='yellow'
         />
       ))}
-      <Char key='day' x={30 * R} y={0} map={charMap.day} color='blue' />
+      <Char key='day' x={30 * R} y={0} map={charMap.day} color='yellow' />
       {numberToArray(hours).map((digital, index) => (
         <Char
           key={`h${index}`}
           x={index * 14 * R + 45 * R}
           y={0}
           map={charMap.digitals[digital]}
-          color='green'
+          color='white'
         />
       ))}
-      <Char key='colon1' x={73 * R} y={0} map={charMap.colon} color='red' />
+      <Char key='colon1' x={73 * R} y={0} map={charMap.colon} color='white' />
       {numberToArray(minutes).map((digital, index) => (
         <Char
           key={`m${index}`}
           x={index * 14 * R + 81 * R}
           y={0}
           map={charMap.digitals[digital]}
-          color='green'
+          color='white'
         />
       ))}
-      <Char key='colon2' x={109 * R} y={0} map={charMap.colon} color='red' />
+      <Char key='colon2' x={109 * R} y={0} map={charMap.colon} color='white' />
       {numberToArray(seconds).map((digital, index) => (
         <Char
           key={`s${index}`}
           x={index * 14 * R + 117 * R}
           y={0}
           map={charMap.digitals[digital]}
-          color='green'
+          color='white'
         />
       ))}
     </rect>
   )
 }
+
 
 /**
  * deadline 截止时间，ms
@@ -259,7 +260,7 @@ function App({deadline}) {
         y={30}
         content='距离春节还有：'
         font='30px serif'
-        fillStyle='orange'
+        fillStyle='white'
       />
       <CountDown x={20} y={80} remainingTime={remainingTime} />
     </>
